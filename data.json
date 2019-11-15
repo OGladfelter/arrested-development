@@ -1,0 +1,17 @@
+{"nodes":
+    [
+        {"id": 0, "name": "Michael", "picture": "https://cdn2us.denofgeek.com/sites/denofgeekus/files/jasonbateman_michael.png"}, 
+        {"id": 1, "name": "G.O.B.", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/f/fb/Season_4_Poster_-_G.O.B.jpg/revision/latest/scale-to-width-down/300?cb=20130521213413"}, 
+        {"id": 2, "name": "Lindsay", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/8/84/Season_4_Poster_-_Lindsay_Bluth_F%C3%BCnke_01.jpg/revision/latest/scale-to-width-down/300?cb=20130521214606"}, 
+        {"id": 3, "name": "Lucille", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/4/4c/Season_4_Poster_-_Lucille_Bluth_01.jpg/revision/latest/scale-to-width-down/300?cb=20130521214825"}, 
+        {"id": 4, "name": "George Michael", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/f/f6/Season_4_Poster_-_George_Michael_Bluth_01.jpg/revision/latest?cb=20130521213443"}, 
+        {"id": 5, "name": "Tobias", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/6/60/Season_4_Poster_-_Tobias_F%C3%BCnke_01.jpg/revision/latest/scale-to-width-down/300?cb=20130521213519"}, 
+        {"id": 6, "name": "George", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/8/88/Season_4_Poster_-_George_Bluth_01.jpg/revision/latest/scale-to-width-down/300?cb=20130521213543"}, 
+        {"id": 7, "name": "Buster", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/4/42/Season_4_Poster_-_Buster_Bluth_01.jpg/revision/latest/scale-to-width-down/300?cb=20130521213532"},
+        {"id": 8, "name": "Maeby", "picture": "https://vignette.wikia.nocookie.net/arresteddevelopment/images/6/69/Season_4_Poster_-_Maeby_F%C3%BCnke_01.jpg/revision/latest?cb=20130521213429"}
+    ],
+"links":
+    [
+        {"source": 7, "target": 1, "value": 103.0}, 
+        {"source": 7, "target": 4, "value": 42.0}, {"source": 7, "target": 6, "value": 46.0}, {"source": 7, "target": 2, "value": 65.0}, {"source": 7, "target": 3, "value": 123.0}, {"source": 7, "target": 8, "value": 23.0}, {"source": 7, "target": 0, "value": 135.0}, {"source": 7, "target": 5, "value": 51.0}, {"source": 1, "target": 4, "value": 88.0}, {"source": 1, "target": 6, "value": 71.0}, {"source": 1, "target": 2, "value": 105.0}, {"source": 1, "target": 3, "value": 115.0}, {"source": 1, "target": 8, "value": 45.0}, {"source": 1, "target": 0, "value": 301.0}, {"source": 1, "target": 5, "value": 87.0}, {"source": 4, "target": 2, "value": 90.0}, {"source": 4, "target": 3, "value": 40.0}, {"source": 4, "target": 8, "value": 138.0}, {"source": 4, "target": 0, "value": 210.0}, {"source": 4, "target": 5, "value": 69.0}, {"source": 6, "target": 4, "value": 31.0}, {"source": 6, "target": 2, "value": 45.0}, {"source": 6, "target": 3, "value": 91.0}, {"source": 6, "target": 8, "value": 21.0}, {"source": 6, "target": 0, "value": 154.0}, {"source": 6, "target": 5, "value": 32.0}, {"source": 2, "target": 3, "value": 115.0}, {"source": 2, "target": 8, "value": 100.0}, {"source": 2, "target": 0, "value": 256.0}, {"source": 2, "target": 5, "value": 144.0}, {"source": 3, "target": 8, "value": 35.0}, {"source": 3, "target": 0, "value": 255.0}, {"source": 3, "target": 5, "value": 74.0}, {"source": 8, "target": 0, "value": 118.0}, {"source": 8, "target": 5, "value": 66.0}, {"source": 0, "target": 5, "value": 133.0}
+    ]}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+  <meta charset="utf-8">
+  <title>Arrested Development Graph</title>
+  
+  <style>
+  line.node-link, path.node-link {
+    fill: none;
+    stroke: darkgray;
+    opacity: 0.8;
+  }
+  circle.node {
+    fill: white;
+    stroke: black
+  }
+  circle.node+text {
+    text-anchor: middle;
+  }
+  text {
+    font-family: sans-serif;
+    pointer-events: none;
+  }
+  image:hover {
+    position:relative;
+    width:100px;
+    height:100px;
+    display:block;
+    z-index:999;
+    /* -webkit-transition: width 1s; Safari prior 6.1 */
+    /* transition: width .5s, height .5s; */
+}
+    
+  </style>
+</head>
+<body>
+    <h1 id="valueHeader">Value: </h1>
+<script type="text/javascript">
+
+d3.json("data.json", function(error, json) {
+    nodes = (json.nodes)
+    links = (json.links)
+
+var width = 500,
+    height = 500;
+
+var force = d3.layout.force()
+    .nodes(nodes)
+    .links(links)
+    .size([width, height]);
+
+// evenly spaces nodes along arc
+var circleCoord = function(node, index, num_nodes){
+    var circumference = circle.node().getTotalLength();
+    var pointAtLength = function(l){return circle.node().getPointAtLength(l)};
+    var sectionLength = (circumference)/num_nodes;
+    var position = sectionLength*index+sectionLength/2;
+    return pointAtLength(circumference-position)
+}
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width * 1.1)
+    .attr("height", height * 1.1)
+    //.style("background-color","purple")
+
+// var defs = svg.append('svg:defs');
+//         defs.append('svg:pattern')
+//             .attr('id', 'avatar')
+//             .attr('patternUnits', 'userSpaceOnUse')
+//             .attr('width', '100')
+//             .attr('height', '100')
+//             .append('svg:image')
+//             .attr('xlink:href', 'https://cdn2us.denofgeek.com/sites/denofgeekus/files/jasonbateman_michael.png')
+//             .attr('x', 0)
+//             .attr('y', 0)
+//             .attr('width', 100)
+//             .attr('height', 100)
+
+// invisible circle for placing nodes
+// it's actually two arcs so we can use the getPointAtLength() and getTotalLength() methods
+var dim = width-80
+var circle = svg.append("path")
+    .attr("d", "M 40, "+(dim/2+65)+" a "+dim/2+","+dim/2+" 0 1,0 "+dim+",0 a "+dim/2+","+dim/2+" 0 1,0 "+dim*-1+",0")
+    .style("fill", "#ffd2c5");
+
+force.start();
+
+// set coordinates for container nodes
+nodes.forEach(function(n, i) {
+    var coord = circleCoord(n, i, nodes.length)
+    n.x = coord.x
+    n.y = coord.y
+});
+
+// use this one for straight line links...
+var lines = svg.selectAll("line.node-link")
+  .data(links).enter().append("line")
+    .attr("class", "node-link")
+  .attr("x1", function(d) { return d.source.x; })
+  .attr("y1", function(d) { return d.source.y; })
+  .attr("x2", function(d) { return d.target.x; })
+  .attr("y2", function(d) { return d.target.y; })
+  .style("opacity","0.8")
+  .style("stroke-width", function(d){return  Math.sqrt(d.value)})
+  .on("mouseover", function(d){
+                svg.selectAll(".node-link").style("stroke","lightgray")
+                svg.selectAll(".node-link").style("opacity","0.3")
+                d3.select(this).style("stroke","#FF4D11")
+                d3.select(this).style("opacity","1")
+                document.getElementById("valueHeader").innerHTML = "Value: " + d.value;
+            })
+    .on("mouseout", function(d){
+        svg.selectAll(".node-link").style("stroke","darkgray")
+        svg.selectAll(".node-link").style("opacity","0.8")
+        document.getElementById("valueHeader").innerHTML = "Value: ";
+    });;
+
+// ...or use this one for curved line links
+// var lines = svg.selectAll("path.node-link")
+//     .data(links).enter().append("path")
+//     .attr("class", "node-link")
+//     .attr("d", function(d) {
+//         var dx = d.target.x - d.source.x,
+//             dy = d.target.y - d.source.y,
+//             dr = Math.sqrt(dx * dx + dy * dy);
+//         return "M" + 
+//             d.source.x + "," + 
+//             d.source.y + "A" + 
+//             dr + "," + dr + " 0 0,1 " + 
+//             d.target.x + "," + 
+//             d.target.y;
+//     })
+//     .style("opacity","0.8")
+//   .style("stroke-width", function(d){return  Math.sqrt(d.value)})
+//   .on("mouseover", function(d){
+//                 svg.selectAll(".node-link").style("stroke","lightgray")
+//                 svg.selectAll(".node-link").style("opacity","0.3")
+//                 d3.select(this).style("stroke","#FF4D11")
+//                 d3.select(this).style("opacity","1")
+//                 //document.getElementById("valueHeader").innerHTML = "Value: " + d.value;
+//             })
+//     .on("mouseout", function(d){
+//         svg.selectAll(".node-link").style("stroke","darkgray")
+//         svg.selectAll(".node-link").style("opacity","0.8")
+//         //document.getElementById("valueHeader").innerHTML = "Value: ";
+//     });
+
+var gnodes = svg.selectAll('g.gnode')
+    .data(nodes).enter().append('g')
+    .attr("transform", function(d) {
+        return "translate("+d.x+","+d.y+")"
+    })
+    .classed('gnode', true);
+
+var node = gnodes.append("circle")
+    .attr("r", 25)
+    .attr("class", "node")
+    // .style("fill", "url(#avatar)")
+    // .on("mouseover", function (d) {
+    //     //d3.select(this).transition().duration(100).attr("r", 30)
+    //     lines.style('stroke', function(l) {
+    //         if (d === l.source || d === l.target)
+    //         return "#FF4D11";
+    //         else
+    //         return "lightgray";})
+    //         lines.style('opacity', function(l) {
+    //         if (d === l.source || d === l.target)
+    //         return "1";
+    //         else
+    //         return "0.3";})
+    // })
+    // .on("mouseout", function () {
+    //     //node.transition().duration(100).attr("r", 25);
+    //     lines.style('stroke', "darkgray")
+    //     lines.style("opacity", "0.8")
+    // });
+
+
+function restingLabelHeight(name){
+if (name == 'Michael' || name == "Lindsay" || name == "G.O.B." || name == "Lucille"){
+        return -3
+    }
+    else {
+        return 3.5
+    }
+}
+
+function activatedLabelHeight(name){
+    if (name == 'Michael' || name == "Lindsay" || name == "G.O.B." || name == "Lucille"){
+            return -3.5
+        }
+        else {
+            return 4
+        }
+}
+
+var labels = gnodes.append("text")
+    .text(function(d){return d.name})
+    .attr("id",function(d){return d.name + "Text"})
+    .style("font-weight", "bold")
+    .attr("dy", function(d){return restingLabelHeight(d.name) + "em"})
+
+
+images = gnodes.append("image")
+    .attr("xlink:href", function(d){return d.picture})
+    .attr("x", -40)
+    .attr("y", -40)
+    .attr("width", 80)
+    .attr("height", 80)
+    .style("border-radius", "50%")
+    .style("overflow","hidden")
+    .attr("id",function(d){return d.name})
+    .on("mouseover", function (d) {
+        d3.select(this).attr("x", -50)
+        d3.select(this).attr("y", -50)
+        document.getElementById(d.name+"Text").dy.baseVal[0].valueInSpecifiedUnits = activatedLabelHeight(d.name)
+        lines.style('stroke', function(l) {
+            if (d === l.source || d === l.target)
+            return "#FF4D11";
+            else
+            return "lightgray";})
+            lines.style('opacity', function(l) {
+            if (d === l.source || d === l.target)
+            return "1";
+            else
+            return "0.3";})})
+    .on("mouseout", function (d) {
+        //document.getElementById("Michael").dy.baseVal[0].valueInSpecifiedUnits = 3.5;
+        images.attr("x", -40);
+        images.attr("y", -40);
+        document.getElementById(d.name+"Text").dy.baseVal[0].valueInSpecifiedUnits = restingLabelHeight(d.name)
+        lines.style('stroke', "darkgray")
+        lines.style("opacity", "0.8")
+    });
+
+})
+
+</script>
+
+</body>
+</html>
