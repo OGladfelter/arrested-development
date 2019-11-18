@@ -3,13 +3,18 @@
 <head>
 <script src="https://d3js.org/d3.v3.min.js"></script>
   <meta charset="utf-8">
-  <title>Arrested Development Graph</title>
+  <title>Arrested Development Network Graph</title>
   
   <style>
+    body{
+        text-align: center;
+    }
+
   line.node-link, path.node-link {
     fill: none;
-    stroke: darkgray;
+    stroke: gray;
     opacity: 0.8;
+    z-index: 3;
   }
   circle.node {
     fill: white;
@@ -31,11 +36,20 @@
     /* -webkit-transition: width 1s; Safari prior 6.1 */
     /* transition: width .5s, height .5s; */
 }
+p{
+    width: 50%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+}
     
   </style>
 </head>
 <body>
-    <h1 id="valueHeader">Value: </h1>
+    <h1>Arrested Development Network Graph</h1>
+    <p>Each line represents the number of scenes the two connecting characters shared together throughout the first four scenes of Arrested Development. Line width's are determined by the number of scenes, so the thicker the line, the more scenes the characters had together. Hover over any line to get an exact count. You can also hover over any character's headshot to highlight all of their connections and to see how many total scenes they've appeared in.</p>
+    <h2 id="valueHeader">Hover over any line or image!</h2>
 <script type="text/javascript">
 
 d3.json("data.json", function(error, json) {
@@ -102,18 +116,18 @@ var lines = svg.selectAll("line.node-link")
   .attr("x2", function(d) { return d.target.x; })
   .attr("y2", function(d) { return d.target.y; })
   .style("opacity","0.8")
-  .style("stroke-width", function(d){return  Math.sqrt(d.value)})
+  //.style("stroke-width", function(d){return  Math.sqrt(d.value)})
   .on("mouseover", function(d){
                 svg.selectAll(".node-link").style("stroke","lightgray")
                 svg.selectAll(".node-link").style("opacity","0.3")
                 d3.select(this).style("stroke","#FF4D11")
                 d3.select(this).style("opacity","1")
-                document.getElementById("valueHeader").innerHTML = "Value: " + d.value;
+                document.getElementById("valueHeader").innerHTML = d.value + " Shared Scenes";
             })
     .on("mouseout", function(d){
-        svg.selectAll(".node-link").style("stroke","darkgray")
+        svg.selectAll(".node-link").style("stroke","gray")
         svg.selectAll(".node-link").style("opacity","0.8")
-        document.getElementById("valueHeader").innerHTML = "Value: ";
+        document.getElementById("valueHeader").innerHTML = "Hover over any line or image!";
     });;
 
 // ...or use this one for curved line links
@@ -215,6 +229,7 @@ images = gnodes.append("image")
         d3.select(this).attr("x", -50)
         d3.select(this).attr("y", -50)
         document.getElementById(d.name+"Text").dy.baseVal[0].valueInSpecifiedUnits = activatedLabelHeight(d.name)
+        document.getElementById("valueHeader").innerHTML = d.total + " Total Scenes";
         lines.style('stroke', function(l) {
             if (d === l.source || d === l.target)
             return "#FF4D11";
@@ -226,15 +241,27 @@ images = gnodes.append("image")
             else
             return "0.3";})})
     .on("mouseout", function (d) {
-        //document.getElementById("Michael").dy.baseVal[0].valueInSpecifiedUnits = 3.5;
         images.attr("x", -40);
         images.attr("y", -40);
         document.getElementById(d.name+"Text").dy.baseVal[0].valueInSpecifiedUnits = restingLabelHeight(d.name)
-        lines.style('stroke', "darkgray")
+        document.getElementById("valueHeader").innerHTML = "Hover over any line or image!";
+        lines.style('stroke', "gray")
         lines.style("opacity", "0.8")
     });
 
 })
+
+d3.json("testData.json", function(error, json) {
+
+var lines = d3.selectAll("line.node-link")
+  .data(links)
+  .transition()
+  .duration(10000)
+  .style("stroke-width", function(d){return  Math.sqrt(d.value)})
+
+//d3.select('line')[0][0].style.strokeWidth = "20";  
+})      
+
 
 </script>
 
