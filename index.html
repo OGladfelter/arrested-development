@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146824308-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-146824308-1');
+        </script>
+
+        <title>Clever Title About Arrested Development</title>
+
+        <!-- Facebook Opengraph -->
+        <meta property="og:url" content="http://cultureplot.com/dem-wiki-views/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Cultureplot | Comparing Film Genres" />
+        <meta property="og:description" content="Measuring And Comparing Movie Genres"/>
+
+        <meta property="og:image" content="http://cultureplot.com/img/wikipedia-views2.png" />
+        <meta property="og:image:alt" content="Measuring and comparing movie genres" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="677" />
+        <meta property="og:image:height" content="583" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="http://cultureplot.com/img/wikipedia-views2.png" />
+        <meta name="twitter:image:alt" content="Measuring and comparing movie genres" />
+        <meta name="twitter:description" content="Measuring And Comparing Movie Genres"/>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+        <link rel="manifest" href="../favicon/site.webmanifest">
+
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans">
+        <link rel = "stylesheet"
+            type = "text/css"
+            href = "css/style.css" />
+
+        <!-- <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+        <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> -->
+    </head>
+
+    <body>
+        <h1 style='font-weight: bold;'>Clever Title About Arrested Development</h1>
+        <h3>By Oliver Gladfelter</h3><h5 style="color: gray;">November 11, 2019</h5>
+        
+        <div class='scatter' id='scatter' ></div>
+
+        
+
+        <fieldset class='align-center'>
+            <label class="selectorLabel">Character:</label>
+            <select id="nameSelector1" style="position:fixed;" onchange="updateXAxis()">
+                <option value="Buster">Buster</option>
+                <option value="G.O.B.">G.O.B</option>
+                <option value="George">George</option>
+                <option value="George_Michael">George Michael</option>
+                <option value="Lindsay">Lindsay</option>
+                <option value="Lucille">Lucille</option>
+                <option value="Michael">Michael</option>
+                <option value="Maeby">Maeby</option>
+                <option value="Oscar">Oscar</option>
+                <option value="Tobias">Tobias</option>
+            </select>
+            <br>
+            <br>
+            <label class="selectorLabel">Character: </label>
+            <select id="nameSelector2" style="position:fixed;" onchange="updateXAxis()">
+                <option value="Buster">Buster</option>
+                <option value="G.O.B.">G.O.B</option>
+                <option value="George">George</option>
+                <option value="George_Michael">George Michael</option>
+                <option value="Lindsay">Lindsay</option>
+                <option value="Lucille">Lucille</option>
+                <option value="Michael">Michael</option>
+                <option value="Maeby">Maeby</option>
+                <option value="Oscar">Oscar</option>
+                <option value="Tobias">Tobias</option>
+            </select>
+        </fieldset>
+
+        <article style="margin-top: 25px;">
+            <h4 style="margin-left:15px; margin-bottom: -50px;">Intro</h4>
+            <p>Let’s say you want to watch a movie that’s intensely action packed. Or perhaps you’re looking for a comedy full of jokes. Well, going to IMDb and searching for action or comedy films might end up overwhelming you with options, not all as action-packed or comedy-filled as you were hoping. Truth of the matter is, genres may be attributed to films with a high degree of generosity. In fact, only 7% of films are listed under just one genre and another 21% are listed under two. Meanwhile, 72% of films are listed under three or more genres.</p>
+            <p>It isn’t always easy to determine the predominant genre of a film, especially before actually watching it. Avengers: Infinity Wars is listed as a comedy, among other things, but if you’re looking for a classic comedy, you might be disappointed. That’s not to say there aren’t plenty of comedic elements in that movie - it’s one of many examples of films eloquently blending genres. Ad Astra was objectively full-on Science Fiction, but the scene with the baboon was straight up horror.</p>
+            <p id="showGraph" class="bottomParagraph">Of course, this is all speculation so far. To determine which of a film’s many genres is the most representative or which of the thousands of horror movies best defines that genre, we need to first create a measure for ‘action-iness’ and ‘sci-fi-iness.’ To accomplish that, we first collect data from IMDb, which provides information on films, including genre classifications and years of release.</p>
+        </article>
+        <article>
+            <h4 style="margin-left:15px; margin-bottom: -50px;">Methodology</h4>
+            <p>IMDb also allows millions of users to help describe movies by contributing keywords related to the plot. For example, Inception’s top keywords are “dream,” “subconscious,” and “thief.” Tracking the most common words used to describe films in each genre helps describe the genre: some of the most common words used to describe action films, for example, are “violence,” “explosion,” and “shootout.” But there’s plenty of overlap here - “explosion” is also among the most common words describing sci-fi films. The same can be said for “violence” and horror films.</p>
+            <p class="bottomParagraph">To get around this, I calculated how often plot keywords are often used to describe any one genre, but is not often used to describe other genres. For example, “UFO” was used to describe 118 sci-fi films, but rarely for any films from the other 8 genres, making it one of the “most sci-fi” plot keywords. Because I now had a numerical score measuring the extent to which any one plot keyword was representative of action films, sci-fi films, and so on, I could calculate scores for movies themselves. Films with several high-action plot keywords were subsequently rated as high-action themselves. Other films had more of a balance between two, three, or even more genres.</p>
+        </article>
+        <article>
+            <h4 style="margin-left:15px; margin-bottom: -50px;">Genre Measures</h4>
+            <p>To the right you can see how much each film’s genre composition consists of action, by my measure. For example, Infinity War is 36% action and 32% Sci-Fi - definitely mostly an Action-Sci-Fi combo, but there’s also some elements of comedy, drama, fantasy, horror, and thriller in it. Remember, each genre is being considered a part of the whole here, so scores of 40% or more is actually quite high.</p>
+            <p id="actionAction" style="margin-bottom:150px;">It’s easy to put this methodology to the test; these genre levels were calculated without consideration of IMDb’s genre classifications, so we can look for films that stand out. In the case of action, for example, there’s plenty of agreement - movies IMDb call action rise to the top of my calculated action score.</p>
+            <p id="comedyComedy" style="margin-bottom:150px;">We also agree on comedy...</p>
+            <p id="thrillerThriller" style="margin-bottom:150px;">...and thriller.</p>
+            <p id="revealControls" class = "bottomParagraph">Use the drop down menu to the right to update the y-axis, to show different genre measurements. The checkboxes will highlight films, according to IMDb's classification.</p>
+        </article>
+        <article>
+            <h4 style="margin-left:15px; margin-bottom: -50px;">The Relationships Between Genres</h4>
+            <p id="revealXAxisControl">Now, for the fun part. Let’s swap out our x-axis for second genre measurement, so we can investigate the relationship between any two genres. For example, action and thriller are two genres which mix well and therefore are often seen together often. In other words, films that lean into action conventions likely leans into thriller conventions as well, and vice versa. Of course, there’s always exceptions to the rule: The Scorpion King (2002) is action-packed with action, but doesn’t necessarily pull on many emotional strings in the way thrillers are infamous for.</p>
+            <p id="thrillerByFantasy">By contrast, it appears to be truly difficult to find thriller-fantasy combos. Alvin and the Chipmunks is one of the most Thriller-Fantasy movies.</p>
+            <p id="actionByDrama" class = "bottomParagraph">Invictus and Men Of Honor, both released in 2009, have a lot of action for leaning so heavily into drama as their predominant genres.</p>
+        </article>
+        <article>
+            <h4 style="margin-left:15px; margin-bottom: -50px;">How Genre Relationships Affect Movie Popularity</h4>
+            <p id="changeToYear">Let’s wrap up by putting everything together now. Once again the x-axis will represent how many ratings a film has received on IMDb, which serves well as a de facto measure of a movie’s popularity. The y-axis now represents the difference between any two genres of choice. If genre one is action and genre two is fantasy, films that balance those two genres equally will fall on the y=0 line. In contrast, movies which lean into action more will rise to the top of the graph, while movies which lean into fantasy more will fall to the bottom of the graph.</p>
+            <p>In this case, the balance between action and drama genre dynamics reveals IMDb users are more interested in films that are more “action” than “drama.”</p>
+            <p id="highlightDrama" class = "bottomParagraph">That’s not to say any film that’s listed as a drama isn’t going to do well. There are plenty of films which are listed as a drama (occasionally among other genres) which I’ve determined balance well with action or sometimes even lean more into the action genre. Many drama films rank at the top of the dataset in terms of popularity.</p>
+        </article>
+
+        <defs>
+            <marker
+              id="arrow"
+              markerUnits="strokeWidth"
+              markerWidth="12"
+              markerHeight="12"
+              viewBox="0 0 12 12"
+              refX="6"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #f00;"></path>
+            </marker>
+          </defs>
+    
+    </body>
+    <script src="js/script.js"></script>
+</html>
